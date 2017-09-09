@@ -110,7 +110,7 @@ set(PKG_CONFIG_USE_CMAKE_PREFIX_PATH ON)
 #
 # If Eigen3 is not found, manually set the cache variable EIGEN3_INCLUDE_DIR
 #===============================================================================
-find_package(Eigen3 3.0.5 QUIET CONFIG)
+# find_package(Eigen3 3.0.5 QUIET CONFIG)
 
 # If Eigen3Config.cmake is not found, use the FindEigen3.cmake module
 if(NOT Eigen3_FOUND)
