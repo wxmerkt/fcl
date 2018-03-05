@@ -333,11 +333,21 @@ void HierarchyTree<BV>::bottomup(const NodeVecIterator lbeg, const NodeVecIterat
   while(lbeg < lcur_end - 1)
   {
     NodeVecIterator min_it1, min_it2;
+    // Initialize iterators to first two elements, they will be chosen
+    // in case no minimum bounding volume can be found.
+    min_it1 = lbeg;
+    min_it2 = lbeg + 1;
     S min_size = std::numeric_limits<S>::max();
     for(NodeVecIterator it1 = lbeg; it1 < lcur_end; ++it1)
     {
       for(NodeVecIterator it2 = it1 + 1; it2 < lcur_end; ++it2)
       {
+        if (std::isnan((*it1)->bv.size()) ||
+            std::isnan((*it2)->bv.size()))
+        {
+          continue;
+        }
+
         S cur_size = ((*it1)->bv + (*it2)->bv).size();
         if(cur_size < min_size)
         {
