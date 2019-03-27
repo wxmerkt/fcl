@@ -161,6 +161,22 @@ S continuousCollideNaive(
       result.time_of_contact = t;
       result.contact_tf1 = cur_tf1;
       result.contact_tf2 = cur_tf2;
+
+      if (!result.contact_tf1.matrix().allFinite())
+      {
+        std::stringstream ss;
+        ss << std::setprecision(20);
+        ss << "[NAIVE] result.contact_tf1 at t=" << t << " is not finite\n" << result.contact_tf1.matrix() << "\n";
+        throw std::logic_error(ss.str());
+      }
+      if (!result.contact_tf2.matrix().allFinite())
+      {
+        std::stringstream ss;
+        ss << std::setprecision(20);
+        ss << "[NAIVE] result.contact_tf2 at t=" << t << " is not finite\n" << result.contact_tf2.matrix() << "\n";
+        throw std::logic_error(ss.str());
+      }
+
       return t;
     }
   }
@@ -235,6 +251,19 @@ typename BV::S continuousCollideBVHPolynomial(
     motion2->getCurrentTransform(tf2);
     result.contact_tf1 = tf1;
     result.contact_tf2 = tf2;
+
+    if (!result.contact_tf1.matrix().allFinite())
+    {
+      std::stringstream ss;
+      ss << "[BVHPOLYNOMIAL] result.contact_tf1 is not finite\n" << result.contact_tf1.matrix() << "\n";
+      throw std::logic_error(ss.str());
+    }
+    if (!result.contact_tf2.matrix().allFinite())
+    {
+      std::stringstream ss;
+      ss << "[BVHPOLYNOMIAL] result.contact_tf2 is not finite\n" << result.contact_tf2.matrix() << "\n";
+      throw std::logic_error(ss.str());
+    }
   }
 
   return result.time_of_contact;
@@ -347,6 +376,19 @@ typename NarrowPhaseSolver::S continuousCollideConservativeAdvancement(
     motion2->getCurrentTransform(tf2);
     result.contact_tf1 = tf1;
     result.contact_tf2 = tf2;
+
+    if (!result.contact_tf1.matrix().allFinite())
+    {
+      std::stringstream ss;
+      ss << "[CONSERVATIVEADVANCEMENT] result.contact_tf1 is not finite\n" << result.contact_tf1.matrix() << "\n";
+      throw std::logic_error(ss.str());
+    }
+    if (!result.contact_tf2.matrix().allFinite())
+    {
+      std::stringstream ss;
+      ss << "[CONSERVATIVEADVANCEMENT] result.contact_tf2 is not finite\n" << result.contact_tf2.matrix() << "\n";
+      throw std::logic_error(ss.str());
+    }
   }
 
   return res;
