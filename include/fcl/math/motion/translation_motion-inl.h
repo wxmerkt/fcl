@@ -79,10 +79,9 @@ TranslationMotion<S>::TranslationMotion(
 template <typename S>
 bool TranslationMotion<S>::integrate(S dt) const
 {
-  if(dt > 1)
-    dt = 1;
+  if(dt > S(1))
+    dt = S(1);
 
-  tf.linear() = rot.toRotationMatrix(); // TODO(JS): necessary?
   tf.translation() = trans_start + trans_range * dt;
 
   return true;
